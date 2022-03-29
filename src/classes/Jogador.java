@@ -1,32 +1,48 @@
 
 package classes;
 
+import java.util.Calendar;
+
 /**
  *
- * @author Priscila Butzke
+ * @author User
  */
 public class Jogador {
     
+    
+    
     private String nome;
     private String posicao;
-    private String dia;
+    //private String meio;
+    //private String ataque;
+    private int dia;
+    private int mes;
     private int anoNascimento;
     private String nacionalidade;
     private double altura;
     private double peso;
     
-
     public Jogador(){
-    }    
-    
-    public String getDia() {
+    }
+
+    public int getDia() {
         return dia;
     }
 
-    public void setDia(String dia) {
+    public void setDia(int dia) {
         this.dia = dia;
     }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
     
+    
+
     public String getNome() {
         return nome;
     }
@@ -40,7 +56,7 @@ public class Jogador {
     }
 
     public void setPosicao(String posicao) {
-        this.posicao = posicao;
+        this.posicao = posicao.toUpperCase();
     }
 
     public int getAnoNascimento() {
@@ -74,34 +90,41 @@ public class Jogador {
     public void setPeso(double peso) {
         this.peso = peso;
     }
-        
-    
+      
     public int calcIdade(){
-        return (2022 - anoNascimento);
-        
+        Calendar c = Calendar.getInstance();
+        int anoAtual = c.get(Calendar.YEAR);
+        return (anoAtual - anoNascimento);
     }
     
-    public String aposentar(){   
-      
+    public int calAposentar(){
+       int idadeAp = 0;
      
-       if (posicao.equals("defesa") && calcIdade() < 40){
-            return  +(40 - calcIdade())+ " anos para se aposentar.";
-       }else if (posicao.equals("meio-Campo")&& calcIdade() < 38){
-            return  +(38 -calcIdade())+ " anos para se aposentar.";
+       if (posicao.equals("DEFESA")){
+            idadeAp = (40 - calcIdade());
+       }else if (posicao.equals("MEIO-CAMPO")){
+            idadeAp = (38 -calcIdade());
        }else {
-            return +(35 - calcIdade() )+ " anos para se aposentar.";
+            posicao.equals("ATACANTE");
+            idadeAp =  (35 - calcIdade());
        }
+       return idadeAp;
        
     } 
     
     public String toString(){
-        return " Nome: " + nome +
-        " \nPosição: " + posicao +
-        " \nData de Nascimento: " + dia+ "/" + anoNascimento +
-        "\nNacionalidade: " + nacionalidade +
-        "nAltura: " + altura +
-        "\n Peso: " + peso + 
-        "\nTempo para aposentadoria: " + aposentar();
+        
+        String resp = "";
+                
+        resp =  " Nome: " + nome 
+                +" \n Data de Nascimento: " + dia+ "/" +mes +"/"+ anoNascimento 
+                +"\n Nacionalidade: " + nacionalidade 
+                +"\n Altura: " + this.altura 
+                +"\n Peso: " + this.peso  
+                +"\n Você ainda precisa trabalhar " + calAposentar() 
+                +"\n anos para se aposentar.";
+                
+        return resp;        
     }
+        
 }
- 
